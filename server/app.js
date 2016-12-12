@@ -2,12 +2,15 @@ var express = require( 'express' );
 var app = express();
 var path = require( 'path' );
 var bodyParser = require( 'body-parser' );
+
+
+
 // create 'urlEncodedParser' in case we want to inject it for post calls:
 var urlEncodedParser = bodyParser.urlencoded( { extended: true } );
 // use bodyParser.urlencoded throughout the app with this:
 app.use( bodyParser.urlencoded( { extended: false } ) );
 // initial jokes provided by the client
-jokes = [
+var jokes = [
   {
     whoseJoke: "Danny",
     jokeQuestion: "Why do scuba divers fall backwards out of boats?",
@@ -42,3 +45,16 @@ app.get( '/', function( req, res ){
 }); // end base url
 
 app.use( express.static( 'public' ) );
+
+// send data
+app.post('/',function(req, res){
+  console.log('in post route');
+  console.log('req.body in post = ', req.body);
+  jokes.push(req.body);
+
+  // var whoseJoke = req.body.whoseJoke;
+  // var jokeQuestion = req.body.jokeQuestion;
+  // var punchLine = req.body.punchLine;
+
+  console.log(jokes);
+});
